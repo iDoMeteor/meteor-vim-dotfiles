@@ -1,4 +1,4 @@
-# Awesome .files for an awesome Meteor / ECMA 6 developer
+# Awesome (and heavily documented) .files for an awesome Meteor / ECMA 6 developer
 
 * .csslintrc - Quick config for CSSLint to ignore .meteor/packages
 * .ctags - Exuberant C-Tags settings for CSS, Less, Mardown & SCSS
