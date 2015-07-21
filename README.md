@@ -2,7 +2,7 @@
 
 I highly recommend starting here:
 * .vim-maps-idometeor.md - An easy to read guide to my Vim shortcuts (AWESOME BTW)
-* .vim-notes-idometeor.md - Notes about my Meteor / ECMA 6 Vim setup & plug-ins (AWESOME BTW)
+* .vim-notes-idometeor.md - Notes about my Meteor / ECMA 6 Vim setup & plug-ins (AWESOME)
 * .vimrc - Super awesome Vim config for an esoteric Meteor / ECMA 6 developer such as myself :D
 * .eslintrc - My Meteor / ECMA 6 ESLint config (npm install -g eslint-config-meteor)
 * .jscsrc - My Meteor / ECMA 6 JSCS configuration file
