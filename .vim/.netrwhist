@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/j/meteor/quiz/src/20150709/lib'
+let g:netrw_dirhist_2='/home/j/meteor/src/meteor/scripts/admin/eslint'
+let g:netrw_dirhist_3='/home/j/meteor/src/meteor/scripts/admin'
+let g:netrw_dirhist_4='/home/j/meteor/src/meteor/scripts/admin/git-hooks'
+let g:netrw_dirhist_5='/home/j/meteor/src/meteor/scripts/admin/jsdoc/docdata-jsdoc-template'
+let g:netrw_dirhist_6='/home/j/meteor/src/meteor'
+let g:netrw_dirhist_7='/home/j/meteor/src/meteor/scripts/admin/eslint'

@@ -1,0 +1,11 @@
+[user]
+	email = idometeor@gmail.com
+	name = iDoMeteor
+[core]
+    editor = vim
+	excludesfile = /home/j/.gitignore
+[push]
+	default = simple
+[color]
+	diff = true
+	ui = true

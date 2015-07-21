@@ -1,0 +1,8 @@
+*.swo
+*.swp
+*~
+./.meteor/local
+./node_modules
+./packages
+./private
+./settings.json

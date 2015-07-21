@@ -1,0 +1,5 @@
+#!/bin/sh
+cd ~
+mv unicentaopos.properties.int unicentaopos.properties
+cd ~/unicentaopos-2.80
+sh start.sh

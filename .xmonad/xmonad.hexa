@@ -1,0 +1,42 @@
+import XMonad
+import XMonad.Hooks.DynamicLog
+import XMonad.Util.EZConfig(additionalKeys)
+import System.IO
+import qualified XMonad.StackSet as W
+import qualified Data.Map        as M
+
+main = do
+
+xmonad $ defaultConfig {
+        borderWidth = 1,
+        terminal = "urxvtc",
+        normalBorderColor = "#000000",
+        focusedBorderColor = "#000000",
+        -- Rebind Mod to the Windows key
+        modMask = mod4Mask
+    } `additionalKeys` [
+        -- launch a terminal
+        ((mod4Mask, xK_Return), spawn "xterm"),
+        ((mod4Mask .|. shiftMask, xK_Return), spawn "urxvtc -e screen -xRR"),
+        ((mod4Mask .|. controlMask, xK_Return), spawn "xterm"),
+        -- launch dmenu
+        -- ((mod4Mask, xK_p), spawn "exe=`dmenu_path | dmenu -nb black -nf cyan -sb black -sf white` && eval \"exec $exe\""),
+        ((mod4Mask, xK_p), spawn "dmenu_run -nb black -nf red -sb black -sf white -i -l 10"),
+        -- Window Shot
+        ((controlMask, xK_F6), spawn "scrot -s -e 'mv $f ~/Archives/Screenshots/"),
+        -- Screen Shot
+        ((controlMask, xK_F5), spawn "scrot -e 'mv $f ~/Archives/Screenshots/'"),
+        -- Lock Screen
+        ((mod4Mask .|. shiftMask, xK_l), spawn "xscreensaver-command -lock"),
+        --  Extras
+        ((mod4Mask, xK_f), spawn "firefox -ProfileManager -no-remote"),
+        ((mod4Mask, xK_g), spawn "gimp"),
+        ((mod4Mask, xK_b), spawn "blender"),
+        ((mod4Mask, xK_i), spawn "inkscape")
+        -- ((mod4Mask, xK_n), spawn "gksudo zenmap")
+        -- ((mod4Mask, xK_m), spawn "gnome-system-monitor"),
+        ]
+        `additionalKeys` 
+        [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+            | (key, sc) <- zip [xK_s, xK_e, xK_a, xK_w, xK_r, xK_d] [0..]
+            , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
