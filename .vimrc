@@ -244,16 +244,14 @@ command! Noh :noh
 
 " ############# Functions #############
 
-if !exists(":JscsFix")
-  fun BreakLine!()
-    if (mode() == 'i')
-      return ((getline(".")[col(".")-2] == '{' && getline(".")[col(".")-1] == '}') ||
-            \(getline(".")[col(".")-2] == '(' && getline(".")[col(".")-1] == ')'))
-    else
-      return 0
-    endif
-  endfun
-endif
+fun! BreakLine()
+  if (mode() == 'i')
+    return ((getline(".")[col(".")-2] == '{' && getline(".")[col(".")-1] == '}') ||
+          \(getline(".")[col(".")-2] == '(' && getline(".")[col(".")-1] == ')'))
+  else
+    return 0
+  endif
+endfun
 
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
@@ -289,7 +287,7 @@ let g:sh_indent_case_labels=1               " fix case statement indents (verify
 " let g:bufExplorerShowUnlisted=1           " show unlisted by default
 " let g:bufExplorerSplitBelow=1             " where to split
 " let g:bufExplorerSplitRight=0             " where to vertical split
-let g:bufExplorerDefaultHelp=1              " turn off default help
+let g:bufExplorerDefaultHelp=0              " turn off default help
 let g:bufExplorerDetailedHelp=1             " turn on detailed help
 let g:bufExplorerShowDirectories=1          " don't show directories in list
 let g:bufExplorerShowRelativePath=1         " show relative path
