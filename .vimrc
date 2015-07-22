@@ -211,6 +211,7 @@ set undofile
 set undodir=~/.vim/undo-history
 set undolevels=10000
 set undoreload=10000
+set viminfo
 set visualbell                  " flash on alert
 set whichwrap=b,s,h,l,<,>,[,]   "
 set wildignore=*.so,*.swp,.swo,.tmp
@@ -305,8 +306,8 @@ let g:bufExplorerSplitOutPathName=0         " don't split path/file names
 " let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.vim/emmit-custom-snippets.json')), "\n"))
 
 " ### Easy Motion ###
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_startofline = 0
+" let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_startofline = 0
 
 " ### JsDoc ###
 let g:jsdoc_allow_input_prompt=1
