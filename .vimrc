@@ -72,14 +72,10 @@ NeoBundle 'elzr/vim-json'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'tpope/vim-markdown'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'gcmt/taboo.vim'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'haya14busa/vim-easyoperator-line'
-NeoBundle 'haya14busa/vim-easyoperator-phrase'
 NeoBundle 'heavenshell/vim-jsdoc'
 NeoBundle 'hushicai/tagbar-javascript.vim'
 NeoBundle 'jlanzarotta/bufexplorer'
@@ -118,10 +114,14 @@ NeoBundle 'slava/vim-spacebars'
 " NeoBundle 'Shougo/neossh.vim'
 " NeoBundle 'Shougo/unite.vim'
 " NeoBundle 'Valloric/YouCompleteMe' " Deprecated for NeoComplete
+" NeoBundle 'airblade/vim-gitgutter'
 " NeoBundle 'bling/vim-airline'
 " NeoBundle 'bonsaiben/bootstrap-snippets'
+" NeoBundle 'easymotion/vim-easymotion'
 " NeoBundle 'einars/js-beautify'
 " NeoBundle 'flazz/vim-colorschemes'
+" NeoBundle 'haya14busa/vim-easyoperator-line'
+" NeoBundle 'haya14busa/vim-easyoperator-phrase'
 " NeoBundle 'honza/vim-snippets'
 " NeoBundle 'idometeor/vim-less'    " Coming soon
 " NeoBundle 'jamescarr/snipmate-nodejs'
@@ -184,7 +184,7 @@ set ignorecase		            " ignores case
 set incsearch		            " do incremental searching
 set laststatus=2
 set lazyredraw                  " for quickfixsigns
-set matchpairs+=<:>	
+set matchpairs+=<:>
 set mouse=a
 set nowrap                      " wrapping kills me
 set nu			                " line numbers
@@ -204,9 +204,10 @@ set showmatch		            " show matching bookends
 set showmode		            " show current mode
 set smartcase		            " search case sensitive if search contains caps
 set softtabstop=2
-set statusline=%<%f\ %=\:\b%n%y%m%r%w\ %l,%c%V\ %P 
+set statusline=%<%f\ %=\:\b%n%y%m%r%w\ %l,%c%V\ %P
 set tabpagemax=100	            " max tabs to show
 set timeoutlen=600              " a whole second is too long for me!
+set undofile
 set undodir=~/.vim/undo-history
 set undolevels=10000
 set undoreload=10000
@@ -238,31 +239,35 @@ augroup END
 
 
 " ### Goofy fingers hacks
-command Noh :noh
+command! Noh :noh
 
 
 " ############# Functions #############
 
-fun BreakLine()
-  if (mode() == 'i')
-    return ((getline(".")[col(".")-2] == '{' && getline(".")[col(".")-1] == '}') ||
-          \(getline(".")[col(".")-2] == '(' && getline(".")[col(".")-1] == ')'))
-  else
-    return 0
-  endif
-endfun
+if !exists(":JscsFix")
+  fun BreakLine!()
+    if (mode() == 'i')
+      return ((getline(".")[col(".")-2] == '{' && getline(".")[col(".")-1] == '}') ||
+            \(getline(".")[col(".")-2] == '(' && getline(".")[col(".")-1] == ')'))
+    else
+      return 0
+    endif
+  endfun
+endif
 
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
 
-function! JscsFix()
-    let l:winview = winsaveview()
-    % ! jscs -x
-    call winrestview(l:winview)
-endfunction
-command JscsFix :call JscsFix()
+if !exists(":JscsFix")
+  function JscsFix()
+      let l:winview = winsaveview()
+      % ! jscs -x
+      call winrestview(l:winview)
+  endfunction
+  command JscsFix :call JscsFix()
+endif
 
 
 
@@ -272,8 +277,8 @@ command JscsFix :call JscsFix()
 
 " ### Bash ###
 let g:BASH_AuthorName   = '@iDoMeteor, aka Jason Edward White'
-let g:BASH_AuthorRef    = 'iDM'                         
-let g:BASH_Company      = 'http://iDoMeteor.com'  
+let g:BASH_AuthorRef    = 'iDM'
+let g:BASH_Company      = 'http://iDoMeteor.com'
 let g:BASH_CopyrightHolder="Jason Edward White, Marquette, MI"
 let g:BASH_Email        = 'idometeor@gmail.com'
 let g:sh_indent_case_labels=1               " fix case statement indents (verify)
@@ -294,7 +299,7 @@ let g:bufExplorerSplitOutPathName=0         " don't split path/file names
 
 " ### CoVim ###
 " let CoVim_default_name = "idometeor"
-" let CoVim_default_port = "31337"  
+" let CoVim_default_port = "31337"
 
 " ### Emmet Options ###
 " let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.vim/emmit-custom-snippets.json')), "\n"))
@@ -387,25 +392,27 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 
 " ### Allish Modes ###
 
-    map  / <Plug>(easymotion-sn)
-    map  N <Plug>(easymotion-prev)
-    map  n <Plug>(easymotion-next)
-    map <Leader>h <Plug>(easymotion-linebackward)
-    map <Leader>j <Plug>(easymotion-j)
-    map <Leader>k <Plug>(easymotion-k)
-    map <Leader>l <Plug>(easymotion-lineforward)
+"    map  / <Plug>(easymotion-sn)
+"    map  N <Plug>(easymotion-prev)
+"    map  n <Plug>(easymotion-next)
+"    map <Leader>h <Plug>(easymotion-linebackward)
+"    map <Leader>j <Plug>(easymotion-j)
+"    map <Leader>k <Plug>(easymotion-k)
+"    map <Leader>l <Plug>(easymotion-lineforward)
 
 " ### Insertish Modes ###
 
     " Buffers
         nnoremap ,b <ESC>:CommandTBuff
-        nnoremap ,m <ESC>:bnext<CR>      " Seem odd?  Try it!
-        nnoremap ,n <ESC>:bprevious<CR>  " Don't think about it, just do it!
+        nnoremap ,m <ESC>:bnext<CR>
+        nnoremap ,n <ESC>:bprevious<CR>
+          " Seem odd?  Try it!
+          " Don't think about it, just do it!
     " Comments
-        inoremap ,* 
-        inoremap ,/
+        imap ,* \cs
+        imap ,/ \cy
         inoremap ,cc  * ******************************************************************************/<ESC>2ba
-        inoremap ,ci // 
+        inoremap ,ci //
         inoremap ,co /*********************************************************************************<cr>
     " Definition lists
         inoremap ,dd <dd><cr>XXX<cr></dd><ESC>?xxx
@@ -438,9 +445,9 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
         inoremap ,sbun  {{#unless XXX}}<cr>{{/unless}}<esc>0k/xxx
         inoremap ,sbune {{#unless XXX}}<cr>{{else}}<cr>{{/unless}}<esc>0kk/xxx
     " Tabs
-        inoremap ,M <ESC>:tabnext<CR>    " Again, seems odd.  Try it.
+        inoremap ,M <ESC>:tabnext<CR>
         inoremap ,N <ESC>:tprevious<CR>
-        inoremap ,t <ESC>:tabnew<CR>         
+        inoremap ,t <ESC>:tabnew<CR>
         inoremap ,t <ESC>:tabnew<CR>
         inoremap ,tR <ESC>:TabooReset<CR>
         inoremap ,to <ESC>:TabooOpen<CR>
@@ -459,9 +466,9 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
     " Unordered list
         inoremap ,ul <ul><cr><li><cr>XXX<cr></li><cr></ul><ESC>?xxx
     " Window manager
-        inoremap ,wm1 <ESC>:FirstExplorerWindow<CR>  
+        inoremap ,wm1 <ESC>:FirstExplorerWindow<CR>
         inoremap ,wm2 <ESC>:BottomExplorerWindow<CR>
-        inoremap ,wmt <ESC>:WMToggle<CR>           
+        inoremap ,wmt <ESC>:WMToggle<CR>
     " That one thing
         inoremap <C-c> <CR><Esc>O
     " That other thing
@@ -471,8 +478,8 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 
     " Buffers
         nnoremap ,b :CommandTBuff
-        nnoremap ,m :bnext<CR>      " Seem odd?  Try it!
-        nnoremap ,n :bprevious<CR>  " Don't think about it, just do it!
+        nnoremap ,m :bnext<CR>
+        nnoremap ,n :bprevious<CR>
     " Editing & Misc
         nnoremap ,fc gg=G
         nnoremap ,s :set spell!<CR>
@@ -538,9 +545,9 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
         nnoremap ,td :TernDef<CR>
         nnoremap ,tr :TernRefs<CR>
     " Tabs
-        nnoremap ,M :tabnext<CR>    " Again, seems odd.  Try it.
+        nnoremap ,M :tabnext<CR>
         nnoremap ,N :tprevious<CR>
-        nnoremap ,t :tabnew<CR>         
+        nnoremap ,t :tabnew<CR>
         nnoremap ,to :TabooOpen<CR>
         nnoremap ,tr :TabooRename<CR>
         nnoremap ,tR :TabooReset<CR>
@@ -548,8 +555,8 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
         nnoremap ,ut :UndotreeToggle<CR>
         nnoremap ,wm1 :FirstExplorerWindow<cr>
         nnoremap ,wm2 :BottomExplorerWindow<cr>
-        nnoremap ,wmt :WMToggle<cr>           
-        nnoremap ,f :E<cr> 
+        nnoremap ,wmt :WMToggle<cr>
+        nnoremap ,f :E<cr>
 
 " ### Selectish Modes ###
 
@@ -562,6 +569,6 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 
 " ### Special Modes ###
 
-    omap / <Plug>(easymotion-tn)
+"    omap / <Plug>(easymotion-tn)
 
 " ### END ###
