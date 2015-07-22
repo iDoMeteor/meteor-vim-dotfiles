@@ -372,7 +372,7 @@ set statusline+=%{SyntasticStatuslineFlag()}
 let g:taboo_tab_format=" %N($W) %f%m"
 
 " ### Tern Options ###
-let g:tern_show_argument_hints = 'on_move'
+" let g:tern_show_argument_hints = 'on_move'
 
 " ### Undotree Options ###
 let g:undotree_SetFocusWhenToggle = 1       " auto-focus on open
