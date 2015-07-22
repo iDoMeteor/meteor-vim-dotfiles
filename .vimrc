@@ -178,7 +178,7 @@ set foldenable		            " turn it on
 set foldmethod=syntax 	        " type of folding - syntax/indent/marker/manual/diff/expr
 set guioptions-=e               " console style tabs in gvim (if u launch by accident :D)
 set hidden                      " hide buffer when switching rather than close it
-set history=500		            " keep X lines of command line history
+set history=500		            " keep X lines of non-viminfo-specified histories line history
 set hlsearch
 set ignorecase		            " ignores case
 set incsearch		            " do incremental searching
@@ -211,7 +211,7 @@ set undofile
 set undodir=~/.vim/undo-history
 set undolevels=10000
 set undoreload=10000
-set viminfo
+set viminfo='500,\"500,:500,@500,/500,!
 set visualbell                  " flash on alert
 set whichwrap=b,s,h,l,<,>,[,]   "
 set wildignore=*.so,*.swp,.swo,.tmp
@@ -456,11 +456,12 @@ let g:winManagerWidth=40
         inoremap ,tR <ESC>:TabooReset<CR>
         inoremap ,to <ESC>:TabooOpen<CR>
         inoremap ,tr <ESC>:TabooRename<CR>
+    " Tagbar
+        inoremap ,tb <ESC>:TagbarToggle<CR>
     " Tern
         inoremap ,tD <ESC>:TernDoc<CR>
         inoremap ,tR <ESC>:TernRename<CR>
         inoremap ,tT <ESC>:TernType<CR>
-        inoremap ,tb <ESC>:TagbarToggle<CR>
         inoremap ,td <ESC>:TernDef<CR>
         inoremap ,tn <Esc>:tabnext<CR>
         inoremap ,tp <Esc>:tabprev<CR>
@@ -486,7 +487,7 @@ let g:winManagerWidth=40
         nnoremap ,n :bprevious<CR>
     " Editing & Misc
         nnoremap ,fc gg=G
-        nnoremap ,s :set spell!<CR>
+        nnoremap ,s! :set spell!<CR>
         nnoremap ,zz :set &scrolloff=999-&scrolloff=2<CR>
         nnoremap <S-Down> ddp
         nnoremap <S-Up> ddkP
@@ -540,8 +541,8 @@ let g:winManagerWidth=40
         nnoremap ,ssa :SessionSaveAs<CR>
         nnoremap ,ssl :SessionShowList<CR>
     " Syntax
+        nnoremap ,fs :JscsFix<CR>
         nnoremap ,jd <Plug>(jsdoc)
-        nnoremap ,jf :JscsFix<CR>
         nnoremap ,tD :TernDoc<CR>
         nnoremap ,tR :TernRename<CR>
         nnoremap ,tT :TernType<CR>
@@ -551,7 +552,7 @@ let g:winManagerWidth=40
     " Tabs
         nnoremap ,M :tabnext<CR>
         nnoremap ,N :tprevious<CR>
-        nnoremap ,t :tabnew<CR>
+        nnoremap ,tn :tabnew<CR>
         nnoremap ,to :TabooOpen<CR>
         nnoremap ,tr :TabooRename<CR>
         nnoremap ,tR :TabooReset<CR>
@@ -560,7 +561,7 @@ let g:winManagerWidth=40
         nnoremap ,wm1 :FirstExplorerWindow<cr>
         nnoremap ,wm2 :BottomExplorerWindow<cr>
         nnoremap ,wmt :WMToggle<cr>
-        nnoremap ,f :E<cr>
+        nnoremap ,fo :E<cr>
 
 " ### Selectish Modes ###
 
