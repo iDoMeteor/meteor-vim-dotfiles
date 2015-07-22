@@ -288,7 +288,8 @@ let g:sh_indent_case_labels=1               " fix case statement indents (verify
 " let g:bufExplorerSplitBelow=1             " where to split
 " let g:bufExplorerSplitRight=0             " where to vertical split
 let g:bufExplorerDefaultHelp=0              " turn off default help
-let g:bufExplorerDetailedHelp=1             " turn on detailed help
+let g:bufExplorerDetailedHelp=0             " turn on detailed help
+let g:bufExplorerSplitVertSize=40           " set width
 let g:bufExplorerShowDirectories=1          " don't show directories in list
 let g:bufExplorerShowRelativePath=1         " show relative path
 let g:bufExplorerSortBy='fullpath'          " default sort order
@@ -379,6 +380,9 @@ let g:undotree_SetFocusWhenToggle = 1       " auto-focus on open
 " let g:vimshell_split_command = "tabnew"
 let g:vimshell_prompt =  '% '
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+
+" ### Winmanager Options ###
+let g:winManagerWidth=40
 
 
 
