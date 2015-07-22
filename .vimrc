@@ -232,6 +232,7 @@ augroup vimrcEx
     " autocmd BufWritePre *.js JscsFix
     autocmd BufWritePost $MYVIMRC so $MYVIMRC
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal foldmethod=indent
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType text setlocal textwidth=80
     " au FileType javascript call JavascriptFold()
