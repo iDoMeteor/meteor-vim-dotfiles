@@ -22,3 +22,6 @@ Then maybe if you're bored:
 * .xscreensaver - Just for backup
 * scripts - Some bash scripts I find handy, not as plush as it used to be
 * README.md - This!
+
+
+In scripts there are a couple files which refer to remote hosts.  They are long dead, no security concern.  Just historical.
