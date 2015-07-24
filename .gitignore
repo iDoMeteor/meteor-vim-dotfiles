@@ -2,7 +2,10 @@
 *.swp
 *~
 ./.meteor/local
-./node_modules
+./meteor/.finished-upgraders
+./meteor/.gitignore
+./meteor/.id
+./meteor/platforms
 ./packages
 ./private
 ./settings.json

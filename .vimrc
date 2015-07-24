@@ -229,14 +229,13 @@ augroup vimrcEx
     autocmd BufReadPost *
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
-    \ endif
-    " autocmd BufWritePre *.js JscsFix
+    \ endif " Go to last position on file open
+    autocmd BufWritePre *.js JscsFix
     autocmd BufWritePost $MYVIMRC so $MYVIMRC
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal foldmethod=indent
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType text setlocal textwidth=80
-    " au FileType javascript call JavascriptFold()
 augroup END
 
 
@@ -348,7 +347,7 @@ let b:surround_indent = 1                 " enable automatic vim re-indenting
 " ### Syntastic Options ###
 "" let g:syntastic_<filetype>_checkers = ['<checker-name>']
 " let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
