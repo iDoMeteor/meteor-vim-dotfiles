@@ -24,7 +24,7 @@ xmonad $ defaultConfig {
             ((mod4Mask, xK_p), spawn "dmenu_run -nb black -nf red -sb black -sf white -i -l 10"),
             -- Window Shot
             --  Make this smarter (dates)
-            ((controlMask, xK_F6), spawn "scrot -s -e 'mv $f ~/Archives/Screenshots/"),
+            ((controlMask, xK_F6), spawn "scrot -s -e 'mv $f ~/Archives/Screenshots/'"),
             -- Screen Shot
             ((controlMask, xK_F5), spawn "scrot -e 'mv $f ~/Archives/Screenshots/'"),
             -- Lock Screen
@@ -57,7 +57,7 @@ xmonad $ defaultConfig {
             -- Chrome
             ((mod4Mask, xK_c), spawn "google-chrome")
         ]
-        `additionalKeys` 
+        `additionalKeys`
         [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-            | (key, sc) <- zip [xK_w, xK_e] [0..]
+            | (key, sc) <- zip [xK_e, xK_w] [0..]
             , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
