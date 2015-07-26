@@ -180,7 +180,7 @@ set guioptions-=e               " console style tabs in gvim (if u launch by acc
 set hidden                      " hide buffer when switching rather than close it
 set history=500		            " keep X lines of non-viminfo-specified histories line history
 set hlsearch
-" set ignorecase		            " ignores case
+set ignorecase		            " ignores case
 set incsearch		            " do incremental searching
 set laststatus=2
 set lazyredraw                  " for quickfixsigns
