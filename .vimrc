@@ -68,18 +68,17 @@ NeoBundle 'Shougo/vimproc.vim', {
 \ }
 
 NeoBundle "Shougo/vimshell"
-NeoBundle 'elzr/vim-json'
-NeoBundle 'groenewege/vim-less'
-NeoBundle 'leafgarland/typescript-vim'
-NeoBundle 'tpope/vim-markdown'
 NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'elzr/vim-json'
 NeoBundle 'gcmt/taboo.vim'
 NeoBundle 'godlygeek/tabular'
+NeoBundle 'groenewege/vim-less'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'heavenshell/vim-jsdoc'
 NeoBundle 'hushicai/tagbar-javascript.vim'
 NeoBundle 'jlanzarotta/bufexplorer'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'lukaszkorecki/CoffeeTags'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'marijnh/tern_for_vim'
@@ -93,8 +92,10 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'skammer/vim-css-color'
 NeoBundle 'slava/tern-meteor'
+NeoBundle 'slava/vim-spacebars'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-markdown'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
@@ -102,7 +103,7 @@ NeoBundle 'vim-scripts/ShowMarks'
 NeoBundle 'vim-scripts/sessionman.vim'
 NeoBundle 'vim-scripts/sudo.vim'
 NeoBundle 'vim-scripts/winmanager'
-NeoBundle 'slava/vim-spacebars'
+NeoBundle 'wincent/Command-T'
 
 " These are either deprecated, slow, buggy, experimental,
 " used on demand, or installed for real in .vim/
@@ -145,7 +146,6 @@ NeoBundle 'slava/vim-spacebars'
 " NeoBundle 'vim-scripts/SyntaxComplete'
 " NeoBundle 'vim-scripts/bash-support.vim'
 " NeoBundle 'wavded/vim-stylus'
-" NeoBundle 'wincent/Command-T'
 
 call neobundle#end()
 filetype plugin indent on
@@ -206,7 +206,7 @@ set smartcase		            " search case sensitive if search contains caps
 set softtabstop=2
 set statusline=%<%f\ %=\:\b%n%y%m%r%w\ %l,%c%V\ %P
 set tabpagemax=100	            " max tabs to show
-set timeoutlen=600              " a whole second is too long for me!
+set timeoutlen=1000             " till commands stop listening for completion
 set undofile
 set undodir=~/.vim/undo-history
 set undolevels=10000
@@ -232,10 +232,11 @@ augroup vimrcEx
     \ endif " Go to last position on file open
     autocmd BufWritePre *.js JscsFix
     autocmd BufWritePost $MYVIMRC so $MYVIMRC
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS " bah
     autocmd FileType html,markdown setlocal foldmethod=indent
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType text setlocal textwidth=80
+    autocmd FileType markdown setlocal textwidth=80
+    " autocmd FileType text setlocal textwidth=80  " do it myself thanx
 augroup END
 
 
@@ -406,7 +407,7 @@ let g:winManagerWidth=40
 " ### Insertish Modes ###
 
     " Buffers
-        nnoremap ,b <ESC>:CommandTBuff
+        nnoremap ,b <ESC>:CommandTBuff<CR>
         nnoremap ,m <ESC>:bnext<CR>
         nnoremap ,n <ESC>:bprevious<CR>
           " Seem odd?  Try it!
@@ -414,39 +415,39 @@ let g:winManagerWidth=40
     " Comments
         imap ,* \cs
         imap ,/ \cy
-        inoremap ,cc  * ******************************************************************************/<ESC>2ba
+        inoremap ,cc  * ******************************************************************************/<ESC>
         inoremap ,ci //
-        inoremap ,co /*********************************************************************************<cr>
+        inoremap ,co /*********************************************************************************<CR>
     " Definition lists
-        inoremap ,dd <dd><cr>XXX<cr></dd><ESC>?xxx
-        inoremap ,dl <dl><cr><dt><cr>XXX<cr></dt><cr><dd><cr>XXX<cr></dd><cr></dl><ESC>7k/xxx
-        inoremap ,dt <dt><cr>XXX<cr></dt><ESC>?xxx
+        inoremap ,dd <dd><cr>XXX<cr></dd><ESC>?xxx<CR>
+        inoremap ,dl <dl><cr><dt><cr>XXX<cr></dt><cr><dd><cr>XXX<cr></dd><cr></dl><ESC>7k/xxx<cr>
+        inoremap ,dt <dt><cr>XXX<cr></dt><ESC>?xxx<cr>
     " Meteor Events
-        inoremap ,ec 'XXX .XXX': function () {<cr>},<cr>2k0/xxx
-        inoremap ,ei 'XXX #XXX': function () {<cr>},<cr>2k0/xxx
-        inoremap ,ev 'XXX XXX': function () {<cr>},<cr>2k0/xxx
+        inoremap ,ec 'XXX .XXX': function () {<cr>},<cr>2k0/xxx<cr>
+        inoremap ,ei 'XXX #XXX': function () {<cr>},<cr>2k0/xxx<cr>
+        inoremap ,ev 'XXX XXX': function () {<cr>},<cr>2k0/xxx<cr>
         inoremap ,fa function () {<cr>}<ESC>O
         inoremap ,fa function XXX () {<cr>}<ESC>O
     " Headings
-        inoremap ,h1 <h1>XXX</h1><ESC>?xxx
-        inoremap ,h2 <h2>XXX</h2><ESC>?xxx
-        inoremap ,h3 <h3>XXX</h3><ESC>?xxx
-        inoremap ,h4 <h4>XXX</h4><ESC>?xxx
-        inoremap ,h5 <h5>XXX</h5><ESC>?xxx
-        inoremap ,h6 <h6>XXX</h6><ESC>?xxx
+        inoremap ,h1 <h1>XXX</h1><ESC>?xxx<cr>
+        inoremap ,h2 <h2>XXX</h2><ESC>?xxx<cr>
+        inoremap ,h3 <h3>XXX</h3><ESC>?xxx<cr>
+        inoremap ,h4 <h4>XXX</h4><ESC>?xxx<cr>
+        inoremap ,h5 <h5>XXX</h5><ESC>?xxx<cr>
+        inoremap ,h6 <h6>XXX</h6><ESC>?xxx<cr>
     " List items
-        inoremap ,li <li><cr>XXX<cr></li><ESC>?xxx
-        inoremap ,ol <ol><cr><li><cr>XXX<cr></li><cr></ol><ESC>?xxx
+        inoremap ,li <li><cr>XXX<cr></li><ESC>?xxx<cr>
+        inoremap ,ol <ol><cr><li><cr>XXX<cr></li><cr></ol><ESC>?xxx<cr>
     " ECMA Objects
-        inoremap ,om xxx: function () {<cr>},<ESC>k0/xxx
-        inoremap ,oo xxx: {<cr>},<ESC>k0/xxx
-        inoremap ,op xxx: XXX,<ESC>0/xxx
+        inoremap ,om xxx: function () {<cr>},<ESC>k0/xxx<cr>
+        inoremap ,oo xxx: {<cr>},<ESC>k0/xxx<cr>
+        inoremap ,op xxx: XXX,<ESC>0/xxx<cr>
     " Spacebars
-        inoremap ,sbea  {{#each XXX}}<cr>{{/if}}<esc>0k/xxx
-        inoremap ,sbif  {{#if XXX}}<cr>{{/if}}<esc>0k/xxx
-        inoremap ,sbife {{#if XXX}}<cr>{{else}}<cr>{{/if}}<esc>0kk/xxx
-        inoremap ,sbun  {{#unless XXX}}<cr>{{/unless}}<esc>0k/xxx
-        inoremap ,sbune {{#unless XXX}}<cr>{{else}}<cr>{{/unless}}<esc>0kk/xxx
+        inoremap ,sbea  {{#each XXX}}<cr>{{/if}}<esc>0k/xxx<cr>
+        inoremap ,sbif  {{#if XXX}}<cr>{{/if}}<esc>0k/xxx<cr>
+        inoremap ,sbife {{#if XXX}}<cr>{{else}}<cr>{{/if}}<esc>0kk/xxx<cr>
+        inoremap ,sbun  {{#unless XXX}}<cr>{{/unless}}<esc>0k/xxx<cr>
+        inoremap ,sbune {{#unless XXX}}<cr>{{else}}<cr>{{/unless}}<esc>0kk/xxx<cr>
     " Tabs
         inoremap ,M <ESC>:tabnext<CR>
         inoremap ,N <ESC>:tprevious<CR>
@@ -466,9 +467,9 @@ let g:winManagerWidth=40
         inoremap ,tp <Esc>:tabprev<CR>
         inoremap ,tr <ESC>:TernRefs<CR>
     " Underscore
-        inoremap ,ue _.each(XXX, function (value, key) {<cr>XXX<cr>}<esc>0kk/xxx
+        inoremap ,ue _.each(XXX, function (value, key) {<cr>XXX<cr>}<esc>0kk/xxx<CR>ce
     " Unordered list
-        inoremap ,ul <ul><cr><li><cr>XXX<cr></li><cr></ul><ESC>?xxx
+        inoremap ,ul <ul><cr><li><cr>XXX<cr></li><cr></ul><ESC>?xxx<cr>
     " Window manager
         inoremap ,wm1 <ESC>:FirstExplorerWindow<CR>
         inoremap ,wm2 <ESC>:BottomExplorerWindow<CR>
@@ -481,10 +482,11 @@ let g:winManagerWidth=40
 " ### Normalish Modes ###
 
     " Buffers
-        nnoremap ,b :CommandTBuff
+        nnoremap ,b :CommandTBuff<cr>
         nnoremap ,m :bnext<CR>
         nnoremap ,n :bprevious<CR>
     " Editing & Misc
+        nnoremap ,do :DiffOrig<CR>
         nnoremap ,fc gg=G
         nnoremap ,s! :set spell!<CR>
         nnoremap ,zz :set &scrolloff=999-&scrolloff=2<CR>
@@ -525,7 +527,7 @@ let g:winManagerWidth=40
         nnoremap ,l <C-W>l
     " Plugins
         nnoremap ,pc :NeoBundleClean<CR>
-        nnoremap ,pi :NeoBundleInstall %:p<CR>
+        nnoremap ,pi :NeoBundleInstall %r:p<CR>
         nnoremap ,pi! :NeoBundleInstall! %:p<CR>
         nnoremap ,pl :NeoBundleList<CR>
         nnoremap ,ps :NeoBundleSearch %:p<CR>
@@ -535,10 +537,10 @@ let g:winManagerWidth=40
         nnoremap ,sd :SessionDelete<CR>
         nnoremap ,se :SessionEdit<CR>
         nnoremap ,sl :SessionList<CR>
-        nnoremap ,so :SessionOpen<CR>
+        " nnoremap ,so :SessionOpen<CR>
         nnoremap ,ss :SessionSave<CR>
-        nnoremap ,ssa :SessionSaveAs<CR>
-        nnoremap ,ssl :SessionShowList<CR>
+        " nnoremap ,ssa :SessionSaveAs<CR>
+        " nnoremap ,ssl :SessionShowList<CR>
     " Syntax
         nnoremap ,fs :JscsFix<CR>
         nnoremap ,jd <Plug>(jsdoc)
